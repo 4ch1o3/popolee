@@ -6,11 +6,10 @@ from django.middleware.csrf import CsrfViewMiddleware
 from datetime import datetime
 
 
-def main_page(request):
+def main_page(request): #show images
     print(request)
     #exchange_info = Exchange.objects.all().values()[0]
-    user_pk = request.user.pk
-    user = User.objects.get(id=user_pk)
-    context = {'info' : exchange_info,
-               'user' : user}
+    posts = Image.objects.order_by('created_at')[:30]
+    print(posts)
+    context = {'posts' : posts}
     return render(request, 'main_page.html',context)

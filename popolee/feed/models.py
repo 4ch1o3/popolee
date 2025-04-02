@@ -1,18 +1,8 @@
 from django.db import models
+from account.models import Profile
 
-from django.contrib.auth.models import AbstractUser
-
-class User(AbstractUser):
-    pass
-
-class Person(models.Model):
-    person = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return self.person.username
-    
 class Image(models.Model):
-    publisher = models.OneToOneField(Person, on_delete=models.CASCADE)
+    publisher = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name= "images")
     image = models.ImageField(upload_to='images', blank=False)
     likes = models.IntegerField(default = 0)
     headcount = models.IntegerField(default = 0)

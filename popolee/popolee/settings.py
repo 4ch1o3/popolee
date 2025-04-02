@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "account.apps.AccountConfig",
     "feed.apps.FeedConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -127,4 +128,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'feed.User'   
+AUTH_USER_MODEL = 'account.User'   

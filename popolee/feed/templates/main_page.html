@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>이미지 피드</title>
+    <style>
+        img {
+            max-width: 300px;
+            border-radius: 8px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>30개 이후 이미지 목록</h1>
+
+    {% for post in posts %}
+        <div class="card">
+            <p><strong>업로드한 유저:</strong> {{ post.publisher.nickname }}</p>
+            <p><strong>업로드 시간:</strong> {{ post.created_at }}</p>
+
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="이미지">
+            {% else %}
+                <p>[이미지 없음]</p>
+            {% endif %}
+
+            <p><strong>좋아요:</strong> {{ post.likes }}</p>
+            <p><strong>전체 인원:</strong> {{ post.headcount }}</p>
+            <p><strong>남성:</strong> {{ post.malecount }} / 여성: {{ post.femalecount }}</p>
+        </div>
+    {% empty %}
+        <p>이미지가 없습니다.</p>
+    {% endfor %}
+</body>
+</html>
