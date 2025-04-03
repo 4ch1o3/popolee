@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>이미지 피드</title>
+    <style>
+        img {
+            max-width: 300px;
+            border-radius: 8px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>포포리</h1>
+    <form method="get" action="{% url 'upload_page' %}">
+        <div class="button-container">
+            <button type="submit" class="btn">업로드</button>
+        </div>
+    </form>
+
+    <form method = "post" >
+        {% csrf_token %}
+        <div class="drop-container"> 
+            <select class="dropmenu" name="sortoption" id="sortoption" onchange="updatePlaceholder()">
+                <option value="most_like" selected>like</option>
+                <option value="show_old">old</option>
+                <option value="show_new">new</option>
+            </select>
+            <div class="input-box">
+                <input type="number" name="headcount" id="headcount" placeholder="headcount">
+                <input type="number" name="in_male" id="in_male" placeholder="Male">
+                <input type="number" name="in_female" id="in_female" placeholder="Female">
+            </div>
+        </div>
+        
+
+        <div class="button-container">
+            <button type="submit" name="search" class="btn">검색</button>
+        </div>
+    </form>
+
+    {% for post in posts %}
+        <div class="card">
+            <p><strong>업로드한 유저:</strong> {{ post.publisher.nickname }}</p>
+            <p><strong>업로드 시간:</strong> {{ post.created_at }}</p>
+
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="이미지">
+            {% else %}
+                <p>[이미지 없음]</p>
+            {% endif %}
+
+            <p><strong>좋아요:</strong> {{ post.likes }}</p>
+            <p><strong>전체 인원:</strong> {{ post.headcount }}</p>
+            <p><strong>남성:</strong> {{ post.malecount }} / 여성: {{ post.femalecount }}</p>
+        </div>
+    {% empty %}
+        <p>이미지가 없습니다.</p>
+    {% endfor %}
+</body>
+</html>
+<script>
+    function updatePlaceholder() {
+        const option = document.getElementById("sortoption").value;
+        // 옵션에 따라 placeholder 변경 등 로직 구현
+    }
+</script>
