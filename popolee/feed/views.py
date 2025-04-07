@@ -9,13 +9,24 @@ from datetime import datetime
 def upload_page(request):
     print(request)
     print(request.user.is_authenticated)
+
     if request.user.is_authenticated == False:
         return redirect('login_page')
+    
+    else:
+        print(request.user)
     
     return render(request, 'upload_page.html')
 
 def main_page(request): #show images
     print(request)
+    context = {}
+
+    if request.user.is_authenticated == True:
+        user = Profile.objects.filter(user=request.user)
+        print(user)
+        context["user"] = user
+        
     max_images = 10     
     
     sort_field = '-likes'
@@ -47,10 +58,10 @@ def main_page(request): #show images
     print(total)
     
     if total != '':
-        posts = Image.objects.filter(headcount = total).order_by(sort_field)[:max_images]
+        posts = Post.objects.filter(headcount = total).order_by(sort_field)[:max_images]
 
     else:
-        posts = Image.objects.order_by(sort_field)[:max_images]
+        posts = Post.objects.order_by(sort_field)[:max_images]
     #filtered_posts = [post for post in posts if post.likes > 10]
     print(posts)
     context = {'posts' : posts}

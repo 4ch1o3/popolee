@@ -7,12 +7,9 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    realname = models.CharField(max_length=30, unique=True)
+    realname = models.CharField(max_length=30, unique=True, null=True)
     nickname = models.CharField(max_length=30, unique=True)
-    instaID  = models.CharField(max_length=30)
-
-    #profile_img = 
-    #follower
+    instaID  = models.CharField(max_length=30, null=True)
 
     def __str__(self) -> str:
         return self.nickname

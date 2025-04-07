@@ -1,28 +1,49 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>로그인 페이지</title>
+    <title>로그인 피드</title>
+    <style>
+        img {
+            max-width: 300px;
+            border-radius: 8px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="wrapper">
-        <h1>로그인 페이지</h1>
+    <h1>로그인</h1>
+
+    <form method = "post" >
+        {% csrf_token %}
+        <div class="input-box">
+            <input type="text" name="id" id="id" placeholder="ID">
+        </div>
+        <div class="input-box">
+            <input type="text" name="pwd" id="pwd" placeholder="Password">
+        </div>
         
-        <form method = "post" >
-            {% csrf_token %}
-            
-            <div class="input-box">
-                <input type="text" name="username" placeholder="username">
-                <i class='bx bxs-user'></i>
-            </div>
-            <div class="input-box">
-                <input type="password" name="password" placeholder="password">
-                <i class='bx bxs-lock-alt'></i>
-            </div>
-            <button type="submit" class="btn">Log in</button>
-            
-        </form>
-    </div>
+
+        <div class="button-container">
+            <button type="submit" name="login" class="btn">로그인</button>
+        </div>
+    </form>
+
+    <form method="get" action="{% url 'register_page' %}">
+        <div class="button-container">
+            <button type="submit" class="btn">회원가입</button>
+        </div>
+    </form>
     
 </body>
 </html>
+<script>
+    function updatePlaceholder() {
+        const option = document.getElementById("sortoption").value;
+        // 옵션에 따라 placeholder 변경 등 로직 구현
+    }
+</script>

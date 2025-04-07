@@ -3,4 +3,4 @@ from .models import *
 from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
-admin.site.register(Image)
+admin.site.register(Post)
