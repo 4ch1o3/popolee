@@ -17,6 +17,27 @@
 </head>
 <body>
     <h1>업로드</h1>
+
+    <div class="container">
+        <div class="image-upload" id="image-upload">
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="button">
+                    <label for="chooseFile">
+                        👉 CLICK HERE! 👈
+                    </label>
+                </div>
+                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+                <div class="button-container">
+                    <button type="submit" name="search" class="btn">검색</button>
+                </div>
+            </form>
+
+        </div>
+        
+    </div>
+
     
 </body>
 </html>

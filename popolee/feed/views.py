@@ -16,6 +16,19 @@ def upload_page(request):
     else:
         print(request.user)
     
+    if request.method == "POST":
+        print(request.POST)
+        print(request.FILES)
+        print("####")
+        user = request.user
+        profile = Profile.objects.filter(user = user).first()
+        print(user)
+        print(profile)
+        if request.FILES.get("chooseFile"):
+            Post.objects.create(publisher = profile, image = request.FILES.get("chooseFile"))
+            return redirect(main_page)
+
+    
     return render(request, 'upload_page.html')
 
 def main_page(request): #show images
