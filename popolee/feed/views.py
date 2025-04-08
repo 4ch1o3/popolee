@@ -7,8 +7,64 @@ from datetime import datetime
 
 def post_page(request, pk):
     print(request)
+    print(request.user)
+    user_is_publisher = False
     post = Post.objects.filter(pk=pk).first()
-    context = { 'post' : post }
+    user_is_ANN = True
+    if request.user.is_authenticated:
+        user_is_ANN = False
+        user = request.user
+        profile = Profile.objects.filter(user = user).first()
+        
+
+        print(post.profile)
+        print(post.profile.user == profile.user)
+
+        if profile.user == post.profile.user:
+            print("same")
+            user_is_publisher = True
+
+    context = { 'post' : post,
+                'user_is_publisher' : user_is_publisher }
+    
+    if request.method == "POST":
+        print(request.POST)
+
+        #delete btn
+        if "del" in request.POST:
+            post.delete()
+            return redirect(main_page)
+            
+        
+        print("################")
+
+        if "likebtn" in request.POST:
+            if user_is_ANN == False:
+                #check Like status
+                like_info = Like.objects.filter(post=post, profile = profile).first()
+                print(like_info)
+                if like_info:
+                    post.likecount -= 1
+                    post.save()
+                    like_info.delete()
+                    pass
+                else:
+                    post.likecount += 1
+                    post.save()
+                    Like.objects.create(post = post, profile = profile)
+
+
+
+                
+
+            pass
+        #like btn 2 like
+        #like btn 2 cancel
+        
+
+        
+
+
 
 
 
@@ -33,7 +89,7 @@ def upload_page(request):
         print(user)
         print(profile)
         if request.FILES.get("chooseFile"):
-            Post.objects.create(publisher = profile, image = request.FILES.get("chooseFile"))
+            Post.objects.create(profile = profile, image = request.FILES.get("chooseFile"))
             return redirect(main_page)
 
     
@@ -50,7 +106,7 @@ def main_page(request): #show images
         
     max_images = 10     
     
-    sort_field = '-likes'
+    sort_field = '-likecount'
     total = ''
     if request.method == "POST":
         print(request.POST)
@@ -59,7 +115,7 @@ def main_page(request): #show images
         print(sortoption)
         match sortoption:
             case 'most_like':
-                sort_field = '-likes'
+                sort_field = '-likecount'
             case 'show_old':
                 sort_field = 'created_at'
             case 'show_new':
@@ -83,7 +139,7 @@ def main_page(request): #show images
 
     else:
         posts = Post.objects.order_by(sort_field)[:max_images]
-    #filtered_posts = [post for post in posts if post.likes > 10]
+    #filtered_posts = [post for post in posts if post.likecount > 10]
     print(posts)
     context = {'posts' : posts}
     return render(request, 'main_page.html',context)

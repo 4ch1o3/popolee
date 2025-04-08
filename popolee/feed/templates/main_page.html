@@ -47,7 +47,7 @@
 
     {% for post in posts %}
         <div class="card">
-            <p><strong>업로드한 유저:</strong> {{ post.publisher.nickname }}</p>
+            <p><strong>업로드한 유저:</strong> {{ post.profile.nickname }}</p>
             <p><strong>업로드 시간:</strong> {{ post.created_at }}</p>
             <p><strong>pk:</strong> {{ post.pk }}</p>
 
@@ -59,7 +59,7 @@
                 <p>[이미지 없음]</p>
             {% endif %}
 
-            <p><strong>좋아요:</strong> {{ post.likes }}</p>
+            <p><strong>좋아요:</strong> {{ post.likecount }}</p>
             <p><strong>전체 인원:</strong> {{ post.headcount }}</p>
             <p><strong>남성:</strong> {{ post.malecount }} / 여성: {{ post.femalecount }}</p>
         </div>
