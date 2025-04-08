@@ -5,6 +5,14 @@ from django.contrib import auth
 from django.middleware.csrf import CsrfViewMiddleware
 from datetime import datetime
 
+def post_page(request, pk):
+    print(request)
+    post = Post.objects.filter(pk=pk).first()
+    context = { 'post' : post }
+
+
+
+    return render(request, 'post_page.html' ,context)
 
 def upload_page(request):
     print(request)

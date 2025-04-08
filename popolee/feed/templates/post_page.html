@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>이미지 피드</title>
+    <style>
+        img {
+            max-width: 300px;
+            border-radius: 8px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>포포리 : post_page</h1>
+    <h2>{{user.username}}</h2>
+    
+
+    <div class="card">
+        <p><strong>업로드한 유저:</strong> {{ post.publisher.nickname }}</p>
+        <p><strong>업로드 시간:</strong> {{ post.created_at }}</p>
+        <p><strong>pk:</strong> {{ post.pk }}</p>
+
+        {% if post.image %}
+                <img src="{{ post.image.url }}" alt="이미지">
+        {% else %}
+            <p>[이미지 없음]</p>
+        {% endif %}
+
+        <p><strong>좋아요:</strong> {{ post.likes }}</p>
+        <p><strong>전체 인원:</strong> {{ post.headcount }}</p>
+        <p><strong>남성:</strong> {{ post.malecount }} / 여성: {{ post.femalecount }}</p>
+
+        {% if user_is_publisher %}
+            <form method="post">
+                <div class="button-container">
+                    <button type="submit" name="del" class="btn">삭제</button>
+                </div>
+            </form>
+        {% else %}
+        {% endif %}
+    </div>
+</body>
+</html>
+<script>
+    function updatePlaceholder() {
+        const option = document.getElementById("sortoption").value;
+        // 옵션에 따라 placeholder 변경 등 로직 구현
+    }
+</script>

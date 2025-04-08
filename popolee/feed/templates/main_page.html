@@ -49,9 +49,12 @@
         <div class="card">
             <p><strong>업로드한 유저:</strong> {{ post.publisher.nickname }}</p>
             <p><strong>업로드 시간:</strong> {{ post.created_at }}</p>
+            <p><strong>pk:</strong> {{ post.pk }}</p>
 
             {% if post.image %}
-                <img src="{{ post.image.url }}" alt="이미지">
+                <a href="./post/{{post.pk}}">
+                    <img src="{{ post.image.url }}" alt="이미지">
+                </a>    
             {% else %}
                 <p>[이미지 없음]</p>
             {% endif %}
