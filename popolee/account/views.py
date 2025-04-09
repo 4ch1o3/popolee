@@ -5,6 +5,9 @@ from django.middleware.csrf import CsrfViewMiddleware
 from datetime import datetime
 
 # Create your views here.
+def my_page(request, pk):
+    return render(request, 'my_page.html')
+
 def login_page(request):
     print("this is login_page")
     print(request)

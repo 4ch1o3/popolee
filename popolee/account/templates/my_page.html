@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>이미지 피드</title>
+    <title>개인페이지</title>
     <style>
         img {
             max-width: 300px;
@@ -16,14 +16,11 @@
     </style>
 </head>
 <body>
-    <h1>포포리</h1>
+    <h1>포포리 : my_page</h1>
     <h2>{{user.username}}</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="button-container">
-            <button type="submit" name="my_page" class="btn">개인페이지</button>
-        </div>
-    </form>
+    <div class="button-container">
+        <button type="submit" name="my_page" class="btn">개인페이지</button>
+    </div>
     <form method="get" action="{% url 'upload_page' %}">
         <div class="button-container">
             <button type="submit" class="btn">업로드</button>

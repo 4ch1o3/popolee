@@ -110,6 +110,8 @@ def main_page(request): #show images
     total = ''
     if request.method == "POST":
         print(request.POST)
+        if 'my_page' in request.POST:
+            return redirect('account/my_page/'+str(user.id))
 
         sortoption = request.POST.get("sortoption")
         print(sortoption)
