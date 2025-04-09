@@ -19,9 +19,9 @@
     <h1>포포리 : my_page</h1>
     <h2>{{user.username}}</h2>
     <div class="button-container">
-        <button type="submit" name="my_page" class="btn">개인페이지</button>
+        <button type="submit" name="logout" class="btn">로그아웃</button>
     </div>
-    <form method="get" action="{% url 'upload_page' %}">
+    <form method="get" action="{% url 'feed:upload_page' %}">
         <div class="button-container">
             <button type="submit" class="btn">업로드</button>
         </div>
@@ -30,21 +30,11 @@
     <form method = "post" >
         {% csrf_token %}
         <div class="drop-container"> 
-            <select class="dropmenu" name="sortoption" id="sortoption" onchange="updatePlaceholder()">
+            <select class="dropmenu" name="sortoption" id="sortoption" onchange="this.form.submit()">
                 <option value="most_like" selected>like</option>
                 <option value="show_old">old</option>
                 <option value="show_new">new</option>
             </select>
-            <div class="input-box">
-                <input type="number" name="headcount" id="headcount" placeholder="headcount">
-                <input type="number" name="in_male" id="in_male" placeholder="Male">
-                <input type="number" name="in_female" id="in_female" placeholder="Female">
-            </div>
-        </div>
-        
-
-        <div class="button-container">
-            <button type="submit" name="search" class="btn">검색</button>
         </div>
     </form>
 
@@ -55,7 +45,7 @@
             <p><strong>pk:</strong> {{ post.pk }}</p>
 
             {% if post.image %}
-                <a href="./post/{{post.pk}}">
+                <a href="{% url 'feed:post_page' post.pk %}">
                     <img src="{{ post.image.url }}" alt="이미지">
                 </a>    
             {% else %}
@@ -71,9 +61,3 @@
     {% endfor %}
 </body>
 </html>
-<script>
-    function updatePlaceholder() {
-        const option = document.getElementById("sortoption").value;
-        // 옵션에 따라 placeholder 변경 등 로직 구현
-    }
-</script>

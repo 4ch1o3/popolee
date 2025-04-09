@@ -17,6 +17,7 @@
 </head>
 <body>
     <h1>업로드</h1>
+    <h2>You : {{requester_profile}}</h2>
 
     <div class="container">
         <div class="image-upload" id="image-upload">
@@ -28,9 +29,9 @@
                         👉 CLICK HERE! 👈
                     </label>
                 </div>
-                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+                <input type="file" id="upload_img" name="upload_img" accept="image/*" onchange="loadFile(this)">
                 <div class="button-container">
-                    <button type="submit" name="search" class="btn">검색</button>
+                    <button type="submit" name="search" class="btn">업로드 하기</button>
                 </div>
             </form>
 

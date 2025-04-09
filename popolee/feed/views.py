@@ -7,114 +7,114 @@ from datetime import datetime
 
 def post_page(request, pk):
     print(request)
-    print(request.user)
-    user_is_publisher = False
+    context = {}
+
+    #check user
+    requester_profile = None
+    if request.user.is_authenticated == True:
+        check_profile = Profile.objects.filter(user=request.user).first()
+        if check_profile:
+            requester_profile = check_profile
+    context["requester_profile"] = requester_profile
+
+    #show post
     post = Post.objects.filter(pk=pk).first()
-    user_is_ANN = True
-    if request.user.is_authenticated:
-        user_is_ANN = False
-        user = request.user
-        profile = Profile.objects.filter(user = user).first()
-        
+    context['post'] = post
 
-        print(post.profile)
-        print(post.profile.user == profile.user)
+    #check publisher and requester
+    if post.profile == requester_profile:
+        user_is_publisher = True
+    else:
+        user_is_publisher = False
+    context["user_is_publisher"] = user_is_publisher
 
-        if profile.user == post.profile.user:
-            print("same")
-            user_is_publisher = True
-
-    context = { 'post' : post,
-                'user_is_publisher' : user_is_publisher }
     
     if request.method == "POST":
         print(request.POST)
 
-        #delete btn
+        #feat : delete the post
         if "del" in request.POST:
             post.delete()
-            return redirect(main_page)
+            return redirect("feed:main_page")
             
         
-        print("################")
-
+        #feat : like btn
         if "likebtn" in request.POST:
-            if user_is_ANN == False:
-                #check Like status
-                like_info = Like.objects.filter(post=post, profile = profile).first()
-                print(like_info)
+            #Anonymous user -> login to like
+            if requester_profile == None:
+                return redirect('account:login_page')
+            else:
+                #check Like status (search in Like DB)
+                like_info = Like.objects.filter(post=post, profile = requester_profile).first()
+                
+                #like cancel
                 if like_info:
                     post.likecount -= 1
                     post.save()
                     like_info.delete()
-                    pass
+
+                #like confirm
                 else:
                     post.likecount += 1
                     post.save()
-                    Like.objects.create(post = post, profile = profile)
-
-
-
-                
-
-            pass
-        #like btn 2 like
-        #like btn 2 cancel
-        
-
-        
-
-
-
+                    Like.objects.create(post = post, profile = requester_profile)
 
 
     return render(request, 'post_page.html' ,context)
 
 def upload_page(request):
     print(request)
-    print(request.user.is_authenticated)
+    context = {}
 
-    if request.user.is_authenticated == False:
-        return redirect('login_page')
+    #check user
+    requester_profile = None
+    if request.user.is_authenticated == True:
+        check_profile = Profile.objects.filter(user=request.user).first()
+        if check_profile:
+            requester_profile = check_profile
+    context["requester_profile"] = requester_profile
+
+    #Anonymous user -> login
+    if requester_profile == None:
+        return redirect('account:login_page')
     
-    else:
-        print(request.user)
     
     if request.method == "POST":
         print(request.POST)
         print(request.FILES)
         print("####")
-        user = request.user
-        profile = Profile.objects.filter(user = user).first()
-        print(user)
-        print(profile)
-        if request.FILES.get("chooseFile"):
-            Post.objects.create(profile = profile, image = request.FILES.get("chooseFile"))
-            return redirect(main_page)
+
+        #upload img file (create Post model record)
+        if request.FILES.get("upload_img"):
+            Post.objects.create(profile = requester_profile, image = request.FILES.get("upload_img"))
+            return redirect("feed:main_page")
 
     
-    return render(request, 'upload_page.html')
+    return render(request, 'upload_page.html',context)
 
-def main_page(request): #show images
+def main_page(request):
     print(request)
     context = {}
 
+    #check user
+    requester_profile = None
     if request.user.is_authenticated == True:
-        user = Profile.objects.filter(user=request.user)
-        print(user)
-        context["user"] = user
-        
+        check_profile = Profile.objects.filter(user=request.user).first()
+        if check_profile:
+            requester_profile = check_profile
+    context["requester_profile"] = requester_profile
+
+
+    #show feed(default)
     max_images = 10     
-    
-    sort_field = '-likecount'
-    total = ''
+    posts = Post.objects.order_by('-likecount')[:max_images]
+
+
     if request.method == "POST":
         print(request.POST)
-        if 'my_page' in request.POST:
-            return redirect('account/my_page/'+str(user.id))
 
+        #feat : sort options
         sortoption = request.POST.get("sortoption")
-        print(sortoption)
         match sortoption:
             case 'most_like':
                 sort_field = '-likecount'
@@ -123,25 +123,14 @@ def main_page(request): #show images
             case 'show_new':
                 sort_field = '-created_at'
 
-        males = females = int(0)
-        in_male = request.POST.get("in_male")
-        in_female = request.POST.get("in_female")
-        if in_male != '':
-            males = int(in_male)
-        if in_female != '':
-            females = int(in_female)
-        #print(males, type(males))
+        #feat : tag options(headcount)
+        tag = request.POST.get("headcount")
 
-        total = request.POST.get("headcount")
-    
-    print(total)
-    
-    if total != '':
-        posts = Post.objects.filter(headcount = total).order_by(sort_field)[:max_images]
+        if tag != '':
+            posts = Post.objects.filter(headcount = tag).order_by(sort_field)[:max_images]  
+        else:
+            posts = Post.objects.order_by(sort_field)[:max_images]
 
-    else:
-        posts = Post.objects.order_by(sort_field)[:max_images]
-    #filtered_posts = [post for post in posts if post.likecount > 10]
-    print(posts)
-    context = {'posts' : posts}
+    context["posts"] = posts
+
     return render(request, 'main_page.html',context)
