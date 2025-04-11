@@ -18,9 +18,15 @@
 <body>
     <h1>포포리 : my_page</h1>
     <h2>{{user.username}}</h2>
-    <div class="button-container">
-        <button type="submit" name="logout" class="btn">로그아웃</button>
-    </div>
+
+    <form method="post" action="{% url 'account:logout' %}">
+        {% csrf_token %}
+
+        <div class="button-container">
+            <button type="submit" class="btn">로그아웃</button>
+        </div>
+    </form>
+
     <form method="get" action="{% url 'feed:upload_page' %}">
         <div class="button-container">
             <button type="submit" class="btn">업로드</button>
