@@ -1,3 +1,117 @@
-@import "tailwindcss"; /* .layout {
-  @apply 
-} */
+@import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css);
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    @apply bg-tertiery flex justify-center-safe;
+  }
+
+  #root {
+    height: 100%;
+  }
+
+  body {
+    position: relative;
+    margin: 0;
+    padding: 0rem;
+    @apply w-1/2 min-w-92 bg-secondary pl-6 pr-6 py-12 min-h-screen;
+  }
+
+  input::placeholder {
+    color: var(--color-text-placeholder);
+  }
+}
+
+@layer components {
+  .large-title {
+    font-family: Pretendard;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    margin: 0;
+  }
+
+  .title {
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    margin: 0;
+  }
+
+  .subtitle {
+    font-family: Pretendard;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1rem;
+    margin: 0;
+  }
+
+  .content {
+    font-family: Pretendard;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1rem;
+    margin: 0;
+  }
+
+  .label {
+    font-family: Pretendard;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 0.9rem;
+    margin: 0;
+  }
+
+  .detail {
+    font-family: Pretendard;
+    font-size: 0.75rem;
+    font-weight: 300;
+    line-height: 1.25rem;
+    margin: 0;
+  }
+  .detail-em {
+    font-family: Pretendard;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    margin: 0;
+  }
+  .footnote {
+    font-family: Pretendard;
+    font-size: 0.625rem;
+    font-weight: 300;
+    line-height: 0.6875rem;
+    margin: 0;
+  }
+}
+
+@theme {
+  --spacing: 0.25rem;
+  --radius-sm: 0.25rem;
+
+  --color-primary: #2f323c;
+  --color-secondary: #fbfaf9;
+  --color-tertiery: #7c8195;
+  --color-text-placeholder: #999999;
+  --color-search-bg: #efefef;
+  --color-error: #be3030;
+  --color-like: #d16d6d;
+  --color-form-bg: rgba(255, 255, 255, 0.8);
+  --color-img-placeholder-green: #c3d8bf;
+  --color-img-placeholder-pink: #e0c9c9;
+  --color-img-placeholder-blue: #cdd7e2;
+  --color-img-placeholder-purple: #ded8e9;
+  --color-img-placeholder-orange: #d9cdbe;
+  --color-img-placeholder-yellow: #d9d4be;
+}
