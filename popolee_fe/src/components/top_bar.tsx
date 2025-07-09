@@ -17,7 +17,7 @@ const SearchIcon = () => {
     <a href="../search_user">
       <img
         src={Search}
-        className="w-6 h-6 opacity-25 inline-block align-middle"
+        className="w-6 h-6 opacity-25 inline-block align-middle hover:opacity-60 transition-opacity"
       ></img>
     </a>
   );
@@ -25,21 +25,22 @@ const SearchIcon = () => {
 
 export const TopBar = ({
   showSearch,
-  showProfile,
-}: {
+}: // showProfile,
+{
   showSearch: boolean;
   showProfile: boolean;
 }) => {
+  // temp
+  // const isLoggedIn = true;
+
   return (
     <div className="block">
       <div className="flex w-full min-h-8 justify-between items-center shrink-0">
         <SmallLogo />
-        {showSearch && showProfile ? (
+        {showSearch ? (
           <div className="flex w-fit gap-6 items-center">
             <SearchIcon />
-            {/*
-          TODO: isLoggedIn ? {isMyPage ? "로그아웃" : <UserProfile/>} : "로그인"
-          */}
+            {/* TODO: userprofile | "login" | "logout" */}
             <UserProfile />
           </div>
         ) : (

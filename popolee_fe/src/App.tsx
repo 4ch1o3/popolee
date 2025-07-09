@@ -1,16 +1,25 @@
 import { Routes, Route } from "react-router-dom";
 import { TopBar } from "./components/top_bar";
+
 import { SearchUser } from "./pages/search_user";
+import { UploadImage } from "./pages/upload_image";
+
 import { FilterList } from "./components/filter_list";
 import { BottomBar } from "./components/bottom_bar";
 import SadFace from "./assets/icons/SadFace.svg";
+import { UserPage } from "./pages/user_page";
+import { SignIn } from "./pages/signin";
+import { ImageListUI } from "./components/image_list";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Feed />}></Route>
+      <Route path="/sign_in" element={<SignIn />}></Route>
       <Route path="/search_user" element={<SearchUser />}></Route>
-      <Route path="/mypage" />;<Route path="*" element={<ErrorPage />}></Route>
+      <Route path={`/user=${"userid"}`} element={<UserPage />} />;
+      <Route path="/upload" element={<UploadImage />} />;
+      <Route path="*" element={<ErrorPage />}></Route>
     </Routes>
   );
 }
@@ -21,13 +30,15 @@ const Feed = () => {
   return (
     <>
       {/* app bar */}
-      <div>
+      <div className="flex flex-col gap-3">
         <TopBar showProfile={true} showSearch={true} />
         <FilterList />
       </div>
 
       {/* image list */}
-      <div className="feed"></div>
+      <div className="feed">
+        <ImageListUI />
+      </div>
       {/* bottom bar */}
       <BottomBar />
     </>

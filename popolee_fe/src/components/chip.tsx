@@ -27,7 +27,7 @@ export const Chip = ({
   const iconColorClass = isSelected ? "text-secondary" : "text-primary";
   const chipColorClass = isSelected
     ? "bg-primary border-secondary text-secondary"
-    : "bg-secondary border-primary text-primary";
+    : "bg-secondary border-primary text-primary hover:bg-search-bg";
 
   return (
     <div

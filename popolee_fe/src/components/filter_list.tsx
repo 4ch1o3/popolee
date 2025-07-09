@@ -6,12 +6,13 @@ export type chipType = "Person" | "Sort" | "Tag";
 export const FilterList = () => {
   const [selectedChip, setSelectedChip] = useState<chipType | null>(null);
 
+  // no multi selection
   const handleSelection = (type: chipType) => {
     setSelectedChip((prev) => (prev === type ? null : type));
   };
 
   return (
-    <div className="gap-2 flex w-fit mt-3">
+    <div className="gap-2 flex w-fit ">
       <Chip
         label="3명"
         type="Person"
